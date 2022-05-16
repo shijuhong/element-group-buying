@@ -5,6 +5,10 @@
       家里蹲大学2号楼10层
       <span class="iconfont position__notice">&#xe7c4;</span>
     </div>
+    <div class="search">
+      <span class="iconfont">&#xe699;</span>
+      <span class="search__text">山姆会员商店</span>
+    </div>
   </div>
   <div class="docker">
     <!-- class 写法：block__element--Modifier -->
@@ -41,7 +45,7 @@
   color: $content-font-color;
   .position {
     position: relative;
-    padding: 0.16rem 0.24rem 0 0;
+    padding: 0.16rem 0.24rem 0.16rem 0;
     line-height: 0.22rem;
     font-size: 0.16rem;
     @include ellipsis;
@@ -55,6 +59,23 @@
       right: 0;
       top: 0.17rem;
       font-size: 0.2rem;
+    }
+  }
+  .search {
+    line-height: 0.32rem;
+    background-color: #f5f5f5;
+    color: #b7b7b7;
+    border-radius: 0.16rem;
+    .iconfont {
+      position: relative;
+      top: 0.02rem;
+      display: inline-block;
+      padding: 0 0.08rem 0 0.1rem;
+      font-size: 0.18rem;
+    }
+    &__text {
+      display: inline-block;
+      font-size: 0.14rem;
     }
   }
 }
