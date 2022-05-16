@@ -1,4 +1,11 @@
 <template>
+  <div class="wrapper">
+    <div class="position">
+      <span class="iconfont position__icon">&#xe7f1;</span>
+      家里蹲大学2号楼10层
+      <span class="iconfont position__notice">&#xe7c4;</span>
+    </div>
+  </div>
   <div class="docker">
     <!-- class 写法：block__element--Modifier -->
     <div class="docker__item docker__item--active">
@@ -21,6 +28,36 @@
 </template>
 
 <style lang="scss">
+@import "./style/variable.scss";
+@import "./style/mixins.scss";
+
+.wrapper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0.5rem;
+  right: 0;
+  padding: 0 0.18rem;
+  color: $content-font-color;
+  .position {
+    position: relative;
+    padding: 0.16rem 0.24rem 0 0;
+    line-height: 0.22rem;
+    font-size: 0.16rem;
+    @include ellipsis;
+    &__icon {
+      position: relative;
+      top: 0.01rem;
+      font-size: 0.2rem;
+    }
+    &__notice {
+      position: absolute;
+      right: 0;
+      top: 0.17rem;
+      font-size: 0.2rem;
+    }
+  }
+}
 .docker {
   display: flex;
   box-sizing: border-box;
@@ -30,7 +67,8 @@
   bottom: 0;
   width: 100%;
   height: 0.49rem;
-  border-top: 1px solid #f1f1f1;
+  border-top: 0.01rem solid #f1f1f1;
+  color: $content-font-color;
   &__item {
     flex: 1;
     text-align: center;
