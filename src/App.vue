@@ -9,6 +9,13 @@
       <span class="iconfont">&#xe699;</span>
       <span class="search__text">山姆会员商店</span>
     </div>
+    <div class="banner">
+      <img
+        class="banner__img"
+        src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01bbc35c1862eaa80121ab5d3ba637.jpg%401280w_1l_2o_100sh.jpg&refer=http%3A%2F%2Fimg.zcool.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1655342335&t=2131c65e96522ad77f6a4b66653f06f4"
+        alt=""
+      />
+    </div>
   </div>
   <div class="docker">
     <!-- class 写法：block__element--Modifier -->
@@ -62,6 +69,7 @@
     }
   }
   .search {
+    margin-bottom: 0.12rem;
     line-height: 0.32rem;
     background-color: #f5f5f5;
     color: #b7b7b7;
@@ -76,6 +84,15 @@
     &__text {
       display: inline-block;
       font-size: 0.14rem;
+    }
+  }
+  .banner {
+    height: 0;
+    overflow: hidden;
+    // banner区域的 25.4%，刚好等于图片高度
+    padding-bottom: 25.4%;
+    &__img {
+      width: 100%;
     }
   }
 }
