@@ -9,7 +9,7 @@
       <input
         type="text"
         class="wrapper__input__content"
-        placeholder="请输入手机号"
+        placeholder="请输入用户名"
         v-model="username"
       />
     </div>
@@ -19,6 +19,7 @@
         class="wrapper__input__content"
         placeholder="请输入密码"
         v-model="password"
+        autocomplete="new-password"
       />
     </div>
     <div class="wrapper__login-button" @click="handleLogin">登录</div>
@@ -33,11 +34,24 @@ import { useRouter } from "vue-router";
 import { post } from "@/utils/request";
 import Toast, { useToastEffect } from "@/components/Toast.vue";
 
+/**
+ * 处理登录相关逻辑
+ * @param showToast 显示 Toast 蒙层的方法
+ */
 const useLoginEffect = (showToast: (message: string) => void) => {
   const data = reactive({ username: "", password: "" });
   const router = useRouter();
   const handleLogin = async () => {
     try {
+      const { username, password } = data;
+      if (username.length === 0) {
+        showToast("请输入用户名！");
+        return;
+      }
+      if (password.length === 0) {
+        showToast("请输入密码！");
+        return;
+      }
       const result = await post("/api/user/login", data);
       if (result?.data?.errno === 0) {
         localStorage.setItem("isLogin", "true");
@@ -57,6 +71,9 @@ const useLoginEffect = (showToast: (message: string) => void) => {
   };
 };
 
+/**
+ * 处理注册跳转
+ */
 const useRegisterEffect = () => {
   const router = useRouter();
   const handleRegisterClick = () => {

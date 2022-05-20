@@ -10,6 +10,9 @@ export default {
   props: ["message"],
 };
 
+/**
+ * 蒙层 Toast 相关逻辑
+ */
 export const useToastEffect = () => {
   const toastData = reactive({
     show: false,
