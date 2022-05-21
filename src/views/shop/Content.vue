@@ -23,6 +23,11 @@
             <span class="product__item__origin">&yen;66</span>
           </p>
         </div>
+        <div class="product__number">
+          <span class="product__number__minus">-</span>
+          0
+          <span class="product__number__plus">+</span>
+        </div>
       </div>
     </div>
   </div>
@@ -35,6 +40,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/style/variable.scss";
+@import "@/style/mixins.scss";
+
 .content {
   display: flex;
   position: absolute;
@@ -47,14 +55,14 @@ export default {
   overflow-y: scroll;
   height: 100%;
   width: 0.76rem;
-  background: #f5f5f5;
+  background: $search-background-color;
   &__item {
     line-height: 0.4rem;
     text-align: center;
     font-size: 0.14rem;
-    color: #333333;
+    color: $content-font-color;
     &--active {
-      background: #ffffff;
+      background: $bgColor;
     }
   }
 }
@@ -62,10 +70,14 @@ export default {
   overflow-y: scroll;
   flex: 1;
   &__item {
+    position: relative;
     padding: 0.12rem 0;
     margin: 0 0.16rem;
-    border-bottom: 0.01rem solid #f1f1f1;
+    border-bottom: 0.01rem solid $content-background-color;
     display: flex;
+    &__detail {
+      overflow: hidden;
+    }
     &__img {
       width: 0.68rem;
       height: 0.68rem;
@@ -75,19 +87,20 @@ export default {
       margin: 0;
       line-height: 0.2rem;
       font-size: 0.14rem;
-      color: #333333;
+      color: $content-font-color;
+      @include ellipsis;
     }
     &__sales {
       margin: 0.06rem 0;
       line-height: 0.16rem;
       font-size: 0.12rem;
-      color: #333333;
+      color: $content-font-color;
     }
     &__price {
       margin: 0;
       line-height: 0.16rem;
       font-size: 0.14rem;
-      color: #e93b3b;
+      color: $highlight-fontColor;
     }
     &__yen {
       font-size: 0.12rem;
@@ -96,8 +109,35 @@ export default {
       margin-left: 0.16em;
       line-height: 0.01rem;
       font-size: 0.12rem;
-      color: #999999;
+      color: $light-fontColor;
       text-decoration: line-through;
+    }
+    .product__number {
+      position: absolute;
+      right: 0;
+      bottom: 0.12rem;
+      &__minus,
+      &__plus {
+        display: inline-block;
+        width: 0.2rem;
+        height: 0.2rem;
+        box-sizing: border-box;
+        line-height: 0.15rem;
+        border-radius: 50%;
+        font-size: 0.2rem;
+        text-align: center;
+      }
+      &__minus {
+        border: 0.01rem solid $light-fontColor;
+        color: $light-fontColor;
+        margin-right: 0.05rem;
+      }
+      &__plus {
+        border: none;
+        background: $btn-bgColor;
+        color: $bgColor;
+        margin-left: 0.05rem;
+      }
     }
   }
 }
