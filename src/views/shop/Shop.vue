@@ -43,12 +43,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/style/variable.scss";
+
 .wrapper {
   padding: 0 0.18rem;
 }
 .search {
   display: flex;
-  margin: 0.2rem 0 0.16rem 0;
+  margin: 0.14rem 0 0.04rem 0;
   line-height: 0.32rem;
   &__back {
     height: 0.32rem;
@@ -59,13 +61,13 @@ export default {
   &__content {
     display: flex;
     flex: 1;
-    background: #f5f5f5;
+    background: $search-background-color;
     border-radius: 0.16rem;
     &__icon {
       width: 0.44rem;
       text-align: center;
       font-size: 0.2rem;
-      color: #b7b7b7;
+      color: $search-fontcolor;
     }
     &__input {
       display: block;
@@ -75,10 +77,10 @@ export default {
       outline: none;
       background: none;
       height: 0.32rem;
-      color: #333333;
+      color: $content-font-color;
       font-size: 0.14rem;
       &::placeholder {
-        color: #333333;
+        color: $content-font-color;
       }
     }
   }
