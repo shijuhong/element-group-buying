@@ -8,13 +8,13 @@
         }"
         v-for="item in categories"
         :key="item.tab"
-        @click="() => handleCategoryClick(item.tab)"
+        @click="() => handleTabClick(item.tab)"
       >
         {{ item.name }}
       </div>
     </div>
     <div class="product">
-      <div class="product__item" v-for="item in contentList" :key="item._id">
+      <div class="product__item" v-for="item in list" :key="item._id">
         <img
           class="product__item__img"
           src="http://www.dell-lee.com/imgs/vue3/near.png"
@@ -40,46 +40,77 @@
 
 <script lang="ts">
 import { get } from "@/utils/request";
-import { reactive, toRefs } from "vue";
+import { reactive, Ref, ref, toRefs, watchEffect } from "vue";
+import { useRoute } from "vue-router";
+
+const categories: { name: string; tab: string }[] = [
+  {
+    name: "全部商品",
+    tab: "all",
+  },
+  {
+    name: "秒杀",
+    tab: "seckill",
+  },
+  {
+    name: "新鲜水果",
+    tab: "fruit",
+  },
+];
+
+/**
+ * 和 Tab 切换相关的路基
+ */
+const useTabEffect = () => {
+  const currentTab = ref(categories[0].tab);
+  const handleTabClick = (tab: string) => {
+    currentTab.value = tab;
+  };
+  return {
+    currentTab,
+    handleTabClick,
+  };
+};
+
+/**
+ * 商品详情列表内容相关逻辑
+ * @param currentTab 当前商品所属类别
+ */
+const useCurrentListEffect = (currentTab: Ref) => {
+  const route = useRoute();
+  const shopId = route.params.id;
+  const content = reactive({ list: [] });
+
+  const getContentData = async (tab: string) => {
+    const result = await get(`/api/shop/${shopId}/products`, {
+      tab,
+    });
+    if (result.data?.errno === 0 && result.data?.data) {
+      content.list = result.data.data;
+    }
+  };
+  // 首次页面加载 & 依赖的数据发生变化时执行
+  watchEffect(() => {
+    getContentData(currentTab.value);
+  });
+
+  const { list } = toRefs(content);
+  return {
+    list,
+  };
+};
 
 export default {
   name: "Content",
   setup() {
-    const categories: { name: string; tab: string }[] = [
-      {
-        name: "全部商品",
-        tab: "all",
-      },
-      {
-        name: "秒杀",
-        tab: "seckill",
-      },
-      {
-        name: "新鲜水果",
-        tab: "fruit",
-      },
-    ];
-    const data = reactive({
-      currentTab: categories[0].tab,
-      contentList: [],
-    });
-    const getContentData = async (tab: string) => {
-      const result = await get("/api/shop/1/products", { tab });
-      if (result.data?.errno === 0 && result.data?.data) {
-        data.contentList = result.data.data;
-      }
-    };
-    const handleCategoryClick = (tab: string) => {
-      getContentData(tab);
-      data.currentTab = tab;
-    };
-    getContentData("all");
-    const { contentList, currentTab } = toRefs(data);
+    const { currentTab, handleTabClick } = useTabEffect();
+    const { list } = useCurrentListEffect(currentTab);
+
     return {
       categories,
-      contentList,
+      list,
       currentTab,
-      handleCategoryClick,
+      handleTabClick,
     };
   },
 };
