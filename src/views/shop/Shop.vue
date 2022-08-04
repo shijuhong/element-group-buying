@@ -9,6 +9,7 @@
     </div>
     <ShopInfo :item="item" :hideBorder="true" v-show="item.imgUrl" />
     <Content />
+    <Cart />
   </div>
 </template>
 
@@ -18,6 +19,7 @@ import ShopInfo from "@/components/ShopInfo.vue";
 import { reactive, toRefs } from "vue";
 import { get } from "@/utils/request";
 import Content from "./Content.vue";
+import Cart from "./Cart.vue";
 
 /**
  * 获取当前商铺信息逻辑
@@ -56,6 +58,7 @@ export default {
   components: {
     ShopInfo,
     Content,
+    Cart,
   },
   setup() {
     const { item, getItemData } = useShopInfoEffect();
