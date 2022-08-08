@@ -6,6 +6,7 @@
     "jsx": "preserve",
     "noImplicitAny": true,
     "importHelpers": true,
+    "suppressImplicitAnyIndexErrors": true,
     "moduleResolution": "node",
     "skipLibCheck": true,
     "esModuleInterop": true,

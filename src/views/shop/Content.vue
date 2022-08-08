@@ -26,8 +26,12 @@
         </div>
         <div class="product__number">
           <span class="product__number__minus">-</span>
-          0
-          <span class="product__number__plus">+</span>
+          {{ cartList?.[shopId]?.[item._id]?.count || 0 }}
+          <span
+            class="product__number__plus"
+            @click="() => addItemToCart(shopId, item._id, item)"
+            >+</span
+          >
         </div>
       </div>
     </div>
@@ -38,6 +42,8 @@
 import { get } from "@/utils/request";
 import { reactive, Ref, ref, toRefs, watchEffect } from "vue";
 import { useRoute } from "vue-router";
+import { useStore } from "vuex";
+import { Product } from "@/interfaces/Product";
 
 const categories: { name: string; tab: string }[] = [
   {
@@ -72,9 +78,7 @@ const useTabEffect = () => {
  * 商品详情列表内容相关逻辑
  * @param currentTab 当前商品所属类别
  */
-const useCurrentListEffect = (currentTab: Ref) => {
-  const route = useRoute();
-  const shopId = route.params.id;
+const useCurrentListEffect = (currentTab: Ref, shopId: string) => {
   const content = reactive({ list: [] });
 
   const getContentData = async (tab: string) => {
@@ -96,17 +100,42 @@ const useCurrentListEffect = (currentTab: Ref) => {
   };
 };
 
+/**
+ * 购物车相关逻辑
+ */
+const useCartEffect = () => {
+  const store = useStore();
+  const { cartList } = toRefs(store.state);
+  const addItemToCart = (
+    shopId: number,
+    productId: number,
+    productInfo: Product
+  ): void => {
+    store.commit("addItemToCart", { shopId, productId, productInfo });
+  };
+  return {
+    cartList,
+    addItemToCart,
+  };
+};
+
 export default {
   name: "Content",
   setup() {
+    const route = useRoute();
+    const shopId = route.params.id as string;
     const { currentTab, handleTabClick } = useTabEffect();
-    const { list } = useCurrentListEffect(currentTab);
+    const { list } = useCurrentListEffect(currentTab, shopId);
+    const { cartList, addItemToCart } = useCartEffect();
 
     return {
+      shopId,
       categories,
       list,
       currentTab,
       handleTabClick,
+      cartList,
+      addItemToCart,
     };
   },
 };
